@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Question ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .photo-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #ff6b9d;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            color: #ff6b9d;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .message {
+            color: #555;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+
+        .question {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .buttons-container {
+            position: relative;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #yes-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        #yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        #yes-btn:active {
+            transform: scale(1.05);
+        }
+
+        #no-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+
+        /* Success message */
+        .success-message {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .success-message h2 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .success-message p {
+            color: #555;
+            font-size: 20px;
+        }
+
+        .hearts {
+            font-size: 50px;
+            margin: 20px 0;
+            animation: heartbeat 1s infinite;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Hide question when answered */
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .message {
+                font-size: 16px;
+            }
+
+            .question {
+                font-size: 20px;
+            }
+
+            button {
+                padding: 12px 30px;
+                font-size: 18px;
+            }
+
+            .photo-container {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Replace the src with your girlfriend's photo URL -->
+        <div class="photo-container">
+            <img src="https://via.placeholder.com/200" alt="Your Beautiful Girlfriend" id="photo">
+        </div>
+
+        <div id="question-section">
+            <h1>To My Dearest Love ❤️</h1>
+            
+            <!-- Your sweet message here -->
+            <div class="message">
+                Every moment with you feels like a dream come true. 
+                Your smile brightens my darkest days, and your love 
+                fills my heart with endless joy. You are my everything, 
+                my best friend, my soulmate.
+            </div>
+
+            <div class="question">
+                Will you be mine forever? 💕
+            </div>
+
+            <div class="buttons-container">
+                <button id="yes-btn">Yes! 💖</button>
+                <button id="no-btn">No</button>
+            </div>
+        </div>
+
+        <div id="success-section" class="success-message">
+            <div class="hearts">💕💖💕</div>
+            <h2>Yay! You said YES!</h2>
+            <p>You've made me the happiest person alive! 🎉</p>
+            <div class="hearts">💕💖💕</div>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('no-btn');
+        const yesBtn = document.getElementById('yes-btn');
+        const questionSection = document.getElementById('question-section');
+        const successSection = document.getElementById('success-section');
+        const container = document.querySelector('.container');
+
+        // Function to move the No button to a random position
+        function moveNoButton() {
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+            
+            // Calculate maximum positions to keep button within container
+            const maxX = containerRect.width - btnRect.width - 60; // 60px padding
+            const maxY = 100; // Limited vertical movement
+            
+            // Generate random position
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY - 50;
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        // Move No button on mouse enter (for desktop) and touch start (for mobile)
+        noBtn.addEventListener('mouseenter', moveNoButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        // Prevent clicking the No button
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        // Yes button functionality
+        yesBtn.addEventListener('click', () => {
+            questionSection.classList.add('hidden');
+            successSection.style.display = 'block';
+        });
+
+        // Initialize No button position
+        moveNoButton();
+    </script>
+</body>
+</html>
